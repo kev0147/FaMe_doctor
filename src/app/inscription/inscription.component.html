@@ -1,0 +1,54 @@
+<div class="container" *ngIf="!signed_up">
+    <button class="back-button" (click)="goBack()">Retour</button>
+    <form class="registration-form" [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+        <h1>Inscription</h1>
+        <div formGroupName="profileForm">
+            <div class="form-group">
+                <label for="nom">Nom<span>*</span></label>
+                <input type="text" formControlName="name" required>
+                <div class="error_message" *ngIf="doctorForm.get('profileForm')?.get('name') && doctorForm.get('profileForm')?.get('name')!.invalid && doctorForm.get('profileForm')?.get('name')!.touched">
+                    Nom obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom<span>*</span></label>
+                <input type="text" formControlName="firstname" required>
+                <div class="error_message" *ngIf="doctorForm.get('profileForm')?.get('firstname') && doctorForm.get('profileForm')?.get('firstname')!.invalid && doctorForm.get('profileForm')?.get('firstname')!.touched">
+                    Prenom obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telephone">Téléphone<span>*</span></label>
+                <input type="text" formControlName="phone_number" required>
+                <div class="error_message" *ngIf="doctorForm.get('profileForm')?.get('phone_number') && (doctorForm.get('profileForm')?.get('phone_number')!.touched || doctorForm.get('profileForm')?.get('phone_number')!.dirty) && doctorForm.get('profileForm')?.get('phone_number')!.invalid " >
+                    numero invalide
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" formControlName="email">
+                <div class="error_message" *ngIf="doctorForm.get('profileForm')?.get('email') && doctorForm.get('profileForm')?.get('email')!.invalid && (doctorForm.get('profileForm')?.get('email')!.touched || doctorForm.get('profileForm')?.get('email')!.dirty)">
+                    E-mail invalide
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="speciality"> profil <span>*</span></label>
+            <select formControlName="speciality">
+                <option value="generaliste">generaliste</option>
+                <option value="specialiste">specialiste</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="doctors_order_number">numero a l'ordre des medecins</label>
+            <input type="text" formControlName="doctors_order_number">
+        </div>
+        <button type="submit" class="submit-button" [disabled]="!doctorForm.valid">Valider</button>
+        <div class="error_message" *ngIf="doctorForm.invalid && validationButtonHasBeenPressed">
+            Veuillez bien remplir tous les champs.
+        </div>
+    </form>
+</div>
+<div *ngIf="signed_up">
+    <H1>Merci. Vous serez contacte dans peu de temps</H1>
+</div>
