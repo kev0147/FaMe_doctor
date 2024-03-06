@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Doctor, Patient, Profile } from '../models';
+import { Doctor, Profile } from '../models';
 import { Router } from '@angular/router';
-import { InscriptionService } from '../inscription.service';
+import { DoctorService } from '../doctor.service';
 
 @Component({
   selector: 'app-inscription',
@@ -28,7 +28,7 @@ export class InscriptionComponent {
   );
 
   
-  constructor(private fb: FormBuilder, private inscriptionService: InscriptionService, private router: Router) { }
+  constructor(private fb: FormBuilder, private doctorSersice: DoctorService, private router: Router) { }
 
   onSubmit() {
     this.validationButtonHasBeenPressed = true;
@@ -39,7 +39,13 @@ export class InscriptionComponent {
       console.log(signedUpDoctor);
       //if(this.signedUpPatient){this.signed_up = true;}
       this.signed_up = true;
+      this.goToChatPage(signedUpDoctor.id!);
     }
+    
+  }
+
+  goToChatPage(patientId: string) {
+    this.router.navigate(['chat'], { queryParams: { patientId: patientId } });
   }
 
   formBuilderToPatient(form:FormGroup){
@@ -58,7 +64,7 @@ export class InscriptionComponent {
   }
 
   addDoctorInDatabase(doctor: Doctor) {
-    this.inscriptionService.addDoctor(doctor)
+    this.doctorSersice.addDoctor(doctor)
       .subscribe(doctor => {
         this.signedUpDoctor = doctor;
       });

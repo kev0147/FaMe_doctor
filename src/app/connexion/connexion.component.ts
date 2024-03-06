@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Token, User } from '../models';
-import { ConnexionService } from '../connexion.service';
+import { DoctorService } from '../doctor.service';
 
 @Component({
   selector: 'app-connexion',
@@ -20,7 +20,7 @@ export class ConnexionComponent {
     },
   );
 
-  constructor(private fb: FormBuilder, private connexionService: ConnexionService, private router: Router){}
+  constructor(private fb: FormBuilder, private doctorService: DoctorService, private router: Router){}
 
   onSubmit(){
     const user: User = {
@@ -28,12 +28,11 @@ export class ConnexionComponent {
       password : this.userForm.value.password!
     }
     console.log(user);
-    this.connexionService.getToken(user).subscribe(token=>this.token = token);
+    this.doctorService.getToken(user).subscribe(token=>this.token = token);
     
     const accessToken = this.token?.access;
     if (accessToken) {
       this.goToDashboard();
-      console.log(this.token);
     }
   }
 

@@ -1,4 +1,5 @@
 export interface Profile {
+    id?: number;
     name: string;
     firstname: string;
     email?: string; // Optional field
@@ -6,12 +7,14 @@ export interface Profile {
 }
 
 export interface Patient {
+    id?: string;
     gender: string;
     birth_date: string;
     profile: Profile;
 }
 
 export interface Doctor {
+    id?: string;
     profile: Profile;
     doctors_order_number? : string;
     speciality? : string;
@@ -55,6 +58,17 @@ export interface Agent {
     speciality: string;
 }
 
-interface Administrator {
-    profil: string;
+export interface Message {
+    key: string;
+    sender: string;
+    receiver: string;
+    message: string;
+}
+
+export interface Notif {
+    id?: string;
+    type: string;
+    patient: string;
+    date: string;
+    dismissed: Boolean;
 }

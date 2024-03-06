@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { InscriptionComponent } from './inscription/inscription.component';
 import { ConnexionComponent } from './connexion/connexion.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeaderComponent } from './header/header.component';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ChatComponent } from './chat/chat.component';
+import { PatientsModule } from './patients/patients.module';
+
 
 @NgModule({
   declarations: [
@@ -15,7 +19,9 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
     WelcomePageComponent,
     InscriptionComponent,
     ConnexionComponent,
-    DashboardComponent
+    HeaderComponent,
+    DashboardComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +31,9 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
       headerName: 'My-Xsrf-Header',
     }),
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    PatientsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

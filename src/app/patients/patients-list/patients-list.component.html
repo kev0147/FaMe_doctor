@@ -1,0 +1,22 @@
+<button class="back-button" (click)="goBack()">Retour</button>
+
+<div>
+    <table class="patient-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Numéro de téléphone</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="patients.length>0">
+            <tr  *ngFor="let patient of patients"  [routerLink]="['/patients', patient.id]" [queryParams]="{ access: token.access, refresh: token.refresh}">
+                <td> {{ patient.profile.name }} </td>
+                <td> {{ patient.profile.firstname }} </td>
+                <td> {{ patient.profile.phone_number }} </td>
+                <td> {{ patient.profile.email }} </td>
+            </tr> 
+        </tbody>
+    </table>
+</div>

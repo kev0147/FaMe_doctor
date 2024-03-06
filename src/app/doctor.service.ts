@@ -1,29 +1,46 @@
-import { Injectable } from '@angular/core';
-import { environment } from './environnement';
-import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Token, User } from './models';
+import { Injectable } from '@angular/core';
+import { Doctor, Token, User } from './models';
+import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from './environnement';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConnexionService {
-  private backendUrl = environment.backendUrl;
-  private tokenUrl = `${this.backendUrl}token/`;  // URL to web api
+export class DoctorService {
   
-
   constructor(private http: HttpClient) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
 
-  getToken(user: User): Observable<Token> {
-    return this.http.post<Token>(this.tokenUrl, user, this.httpOptions).pipe(
+  // inscription_patient
+  addDoctor(doctor: Doctor): Observable<Doctor> {
+    console.log(doctor);
+    return this.http.post<Doctor>(environment.doctorInscription, doctor, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
 
+  getToken(user: User): Observable<Token> {
+    return this.http.post<Token>(environment.token, user, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTheLoggedInDoctor(token: Token): Observable<Doctor> {
+    return this.http.get<Doctor>(environment.getDoctorFromToken, this.makeHeader(token))
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  makeHeader(token: Token){
+    return {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization':`Bearer ${token.access}`})
+    };
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -38,4 +55,6 @@ export class ConnexionService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later. Backend may not respond'));
   }
+
+  
 }
